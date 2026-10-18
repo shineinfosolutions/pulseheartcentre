@@ -39,5 +39,6 @@ data/pulse-db.json
 
 .vercel
 
-# Local secrets
+# Secrets
 .env
+!.env.example
