@@ -12,6 +12,13 @@ export default defineConfig({
   },
   nitro: {
     preset: "vercel",
+    // Run functions in Mumbai, next to the MongoDB Atlas cluster (AWS ap-south-1).
+    vercel: {
+      functions: {
+        regions: ["bom1"],
+        maxDuration: 30,
+      },
+    },
     rollupConfig: {
       output: {
         inlineDynamicImports: true,
