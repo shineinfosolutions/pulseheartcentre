@@ -19,6 +19,7 @@ import {
   Upload,
   Trash2,
   Camera,
+  Loader2,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -212,11 +213,14 @@ function DoctorSettingsPage() {
   };
 
   const handleSavePassword = async () => {
-    if (newPassword !== confirmPassword) {
-      return toast.error("New passwords do not match!");
+    if (!currPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
+      return toast.error("Please fill in all password fields (Current, New & Confirm).");
     }
-    if (!currPassword) {
-      return toast.error("Current password is required.");
+    if (newPassword !== confirmPassword) {
+      return toast.error("New password and Confirm password do not match.");
+    }
+    if (newPassword.length < 6) {
+      return toast.error("New password must be at least 6 characters long.");
     }
     try {
       await updateMutation.mutateAsync({
@@ -680,27 +684,16 @@ function DoctorSettingsPage() {
 
               <div className="pt-2 flex justify-end">
                 <Button
-                  onClick={() => {
-                    if (!currPassword.trim() || !newPassword.trim() || !confirmPassword.trim()) {
-                      toast.error("Please fill in all password fields (Current, New & Confirm).");
-                      return;
-                    }
-                    if (newPassword !== confirmPassword) {
-                      toast.error("New password and Confirm password do not match.");
-                      return;
-                    }
-                    if (newPassword.length < 6) {
-                      toast.error("New password must be at least 6 characters long.");
-                      return;
-                    }
-                    setCurrPassword("");
-                    setNewPassword("");
-                    setConfirmPassword("");
-                    triggerSaved("Password changed successfully!");
-                  }}
+                  onClick={handleSavePassword}
+                  disabled={updateMutation.isPending}
                   className="gap-2"
                 >
-                  <Save className="h-4 w-4" /> Change Password
+                  {updateMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Save className="h-4 w-4" />
+                  )}{" "}
+                  Change Password
                 </Button>
               </div>
             </CardContent>

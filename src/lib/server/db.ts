@@ -186,6 +186,27 @@ const DB_PATH = join(process.cwd(), "data", "pulse-db.json");
 
 let cache: DbShape | null = null;
 
+// Primary portal login account
+const ADMIN_EMAIL = "admin@pulseheartcentre.in";
+const ADMIN_INITIAL_PASSWORD = "Pulse@2026";
+const LEGACY_DEMO_EMAIL = "doctor@pulseheart.com";
+
+/**
+ * One-time migration: replaces the old demo login (doctor@pulseheart.com / Doctor@123)
+ * with the real admin credentials. Runs only while the legacy email is present, so a
+ * password changed later from Settings is never overwritten.
+ */
+function migrateLegacyDemoAccount(db: DbShape): boolean {
+  const legacyUser = db.users.find((u) => u.email.toLowerCase() === LEGACY_DEMO_EMAIL);
+  if (!legacyUser) return false;
+  legacyUser.email = ADMIN_EMAIL;
+  legacyUser.passwordHash = hashPassword(ADMIN_INITIAL_PASSWORD);
+  for (const d of db.doctors) {
+    if (d.email.toLowerCase() === LEGACY_DEMO_EMAIL) d.email = ADMIN_EMAIL;
+  }
+  return true;
+}
+
 function seedDb(): DbShape {
   const now = new Date();
   const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -206,7 +227,7 @@ function seedDb(): DbShape {
       name: "Dr. Prakash Chand Shahi",
       specialty: "Cardiologist",
       department: "Diagnostics",
-      email: "doctor@pulseheart.com",
+      email: ADMIN_EMAIL,
       phone: "+91 98765 10001",
       experienceYears: 24,
       status: "Active",
@@ -224,8 +245,8 @@ function seedDb(): DbShape {
     {
       id: "user-doc-prakash",
       name: "Dr. Prakash Chand Shahi",
-      email: "doctor@pulseheart.com",
-      passwordHash: hashPassword("Doctor@123"),
+      email: ADMIN_EMAIL,
+      passwordHash: hashPassword(ADMIN_INITIAL_PASSWORD),
       role: "doctor",
       doctorId: "doc-prakash",
       avatarInitials: "PC",
@@ -515,6 +536,9 @@ async function persist() {
 
 export async function getDb(): Promise<DbShape> {
   const db = await load();
+  if (migrateLegacyDemoAccount(db)) {
+    await persist();
+  }
   if (!db.settings) {
     db.settings = {
       hospitalName: "Pulse Heart Centre",

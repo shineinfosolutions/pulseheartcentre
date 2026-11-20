@@ -23,7 +23,7 @@ async function reseed() {
     name: "Dr. Prakash Chand Shahi",
     specialty: "Cardiologist",
     department: "Cardiology",
-    email: "doctor@pulseheart.com",
+    email: "admin@pulseheartcentre.in",
     phone: "+91 98765 10001",
     experienceYears: 24,
     status: "Active",
@@ -33,8 +33,8 @@ async function reseed() {
   const user = {
     id: "user-doc-prakash",
     name: "Dr. Prakash Chand Shahi",
-    email: "doctor@pulseheart.com",
-    passwordHash: hashPassword("Doctor@123"),
+    email: "admin@pulseheartcentre.in",
+    passwordHash: hashPassword("Pulse@2026"),
     role: "doctor",
     doctorId: "doc-prakash",
     avatarInitials: "PC",
@@ -43,7 +43,7 @@ async function reseed() {
   await DoctorModel.create(doctor);
   await UserModel.create(user);
 
-  console.log("Successfully seeded new single doctor: doctor@pulseheart.com / Doctor@123");
+  console.log("Successfully seeded primary admin account: admin@pulseheartcentre.in");
   process.exit(0);
 }
 

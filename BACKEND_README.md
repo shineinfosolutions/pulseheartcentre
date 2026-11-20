@@ -7,7 +7,7 @@ All backend code lives in `src/lib/server/`:
 
 | File | Purpose |
 |------|---------|
-| `db.ts` | JSON file-based data store at `data/pulse-db.json`. Seeded with demo doctors, patients, appointments, invoices, and notifications on first run. Uses Node's built-in `crypto.scryptSync` for secure password hashing. |
+| `db.ts` | JSON file-based data store at `data/pulse-db.json`. Seeded with the primary portal account on first run. Uses Node's built-in `crypto.scryptSync` for secure password hashing. |
 | `auth.ts` | Login / logout / session server functions. Sessions stored in the same JSON file, with an `httpOnly` cookie. |
 | `api.ts` | All dashboard data server functions — admin overview, doctor CRUD, appointment status updates, billing, reports, doctor overview, schedule, notifications, profile. |
 
@@ -15,12 +15,9 @@ All backend code lives in `src/lib/server/`:
 - Cookie name: `pulse_session` (httpOnly, 7-day TTL)
 - Passwords hashed with scrypt (Node built-in — no bcrypt dependency needed)
 
-### Demo credentials (seeded on first run)
+### Login account
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | `admin@pulseheart.com` | `Admin@123` |
-| Doctor | `amit.verma@pulseheart.com` | `Doctor@123` |
+A single portal account is seeded on first run (and the old demo login is migrated to it automatically). Credentials are shared privately with the hospital admin — change the password after first sign-in.
 
 ### New routes
 

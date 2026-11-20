@@ -31,11 +31,6 @@ function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fillDemo = () => {
-    setEmail("doctor@pulseheart.com");
-    setPassword("Doctor@123");
-  };
-
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -133,7 +128,7 @@ function LoginPage() {
                   type="email"
                   required
                   autoComplete="username"
-                  placeholder="doctor@pulseheart.com"
+                  placeholder="you@pulseheartcentre.in"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-9"
@@ -168,14 +163,6 @@ function LoginPage() {
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               Sign in
             </Button>
-
-            <button
-              type="button"
-              onClick={fillDemo}
-              className="w-full text-center text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-            >
-              Use demo {role} credentials
-            </button>
           </form>
 
           <p className="mt-8 text-center text-xs text-muted-foreground">
