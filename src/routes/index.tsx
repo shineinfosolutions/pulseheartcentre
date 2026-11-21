@@ -376,7 +376,7 @@ function Hero() {
    TRUST BAR — horizontal scroll marquee
    ═══════════════════════════════════════════════════ */
 function TrustBar() {
-  const items = ["NABH Accredited", "ISO 9001:2015", "Cashless Insurance", "AYUSHMAN Bharat", "24×7 Cardiac ICU", "Fellow of ESC"];
+  const items = ["NABH Accredited", "ISO 9001:2015", "Cashless Insurance","24×7 Cardiac ICU", "Fellow of ESC"];
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1746,7 +1746,7 @@ function InfoTile({ icon: Icon, title, value }: { icon: React.ComponentType<{ cl
 function FAQ() {
   const faqs = [
     { q: "Do you handle cardiac emergencies 24×7?", a: "Yes. Our emergency and cath-lab team is on-site 24×7 with door-to-balloon protocols under 60 minutes." },
-    { q: "Are cashless insurance and Ayushman Bharat accepted?", a: "We accept all major insurance providers and Ayushman Bharat with dedicated desks for paperwork." },
+    { q: "Is cashless insurance accepted?", a: "We accept all major insurance providers with dedicated desks for paperwork." },
     { q: "Can I get a second opinion online?", a: "Absolutely. Our tele-cardiology service offers structured second opinions with your reports." },
     { q: "Do you offer cardiac rehab after procedures?", a: "A full cardiac rehab program with physiotherapy, diet and lifestyle support is included for eligible patients." },
   ];
